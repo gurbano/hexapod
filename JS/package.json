@@ -1,0 +1,24 @@
+{
+  "name": "j5",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/controller.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "johnny-five": "^2.1.0",
+    "joystick": "^0.1.2",
+    "node-xboxdrv": "^0.2.2"
+  },
+  "devDependencies": {
+    "@types/johnny-five": "^2.1.11",
+    "@types/node": "^22.10.3",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
