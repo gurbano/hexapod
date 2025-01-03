@@ -1,0 +1,29 @@
+{
+  "name": "j5",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/controller.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "i2c-bus": "^5.2.3",
+    "johnny-five": "^2.1.0",
+    "joystick": "^0.1.2",
+    "node-xboxdrv": "^0.2.2",
+    "oled-font-5x7": "^1.0.3",
+    "oled-js": "^5.1.2",
+    "png-to-lcd": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/johnny-five": "^2.1.11",
+    "@types/node": "^22.10.3",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
