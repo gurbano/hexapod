@@ -76,15 +76,15 @@ export default class Stick extends EventEmitter {
 
                     this.emit("event", {
                         type: "axis",
-                        state: { ...this.state },
+                        state: this.state,
                     });
                 } else {
                     this.emit("event", { type: "other", data: event });
                 }
             }
 
-            // Emit the current state after processing the event
-            this.emit("state", { ...this.state });
+            // // Emit the current state after processing the event
+            // this.emit("status", this.state);
 
             // Schedule next read
             if (this.isReading) {
@@ -94,6 +94,13 @@ export default class Stick extends EventEmitter {
             this.emit("error", new Error(`Error reading joystick data: ${err.message}`));
             this.stop();
         }
+    }
+
+    private emitStatus = async () => {
+            this.emit("status", this.state);
+            if (this.isReading) {
+                setTimeout(() => this.emitStatus(), 1000/60);
+            }
     }
 
     public async start(): Promise<void> {
@@ -106,6 +113,7 @@ export default class Stick extends EventEmitter {
             this.fd = await fs.open(this.devicePath, "r");
             this.isReading = true;
             this.emit("start");
+            await this.emitStatus();
             await this.readJoystick();
         } catch (err) {
             this.emit("error", new Error(`Failed to open joystick device at ${this.devicePath}: ${err.message}`));
@@ -133,14 +141,14 @@ export default class Stick extends EventEmitter {
 }
 
 // Example Usage
-const stick = new Stick("/dev/input/js0", 120); // Read 120 times per second
-stick.on("event", (event) => console.log(event)); // Handle events
-stick.on("state", (state) => console.log("State:", state)); // Handle state updates
-stick.on("error", (err) => console.error(err)); // Handle errors
-stick.on("start", () => console.log("Stick started"));
-stick.on("stop", () => console.log("Stick stopped"));
+// const stick = new Stick("/dev/input/js0", 120); // Read 120 times per second
+// stick.on("event", (event) => console.log(event)); // Handle events
+// stick.on("status", (status) => console.log("State:", status)); // Handle state updates
+// stick.on("error", (err) => console.error(err)); // Handle errors
+// stick.on("start", () => console.log("Stick started"));
+// stick.on("stop", () => console.log("Stick stopped"));
 
-stick.start();
+// stick.start();
 
 
 // setTimeout(() => stick.stop(), 10000);

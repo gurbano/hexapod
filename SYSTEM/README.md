@@ -68,10 +68,19 @@ The system is designed to execute several tasks concurrently, ensuring smooth op
 
 2. **Start the System:**
    - Run the individual scripts or use the provided startup script to initialize all tasks:
-     ```bash
-     python3 control.py &
-     ts-node Stick.ts &
-     ts-node heartbeat.ts &
+    ```bash
+
+      # base system init (python controller)
+      cd ~/hexapod/PT/src/Server
+      sudo python HexaServer.py
+
+      # xbox controller system setup
+      sudo rmmod xpad
+      sudo xbodrv
+
+      # JS orchestrator start
+      cd ~/hexapod/JS
+      ts-node src/HexaServer.ts
      ```
 
 3. **Monitor System Status:**
