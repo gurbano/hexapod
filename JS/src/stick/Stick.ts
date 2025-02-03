@@ -139,16 +139,3 @@ export default class Stick extends EventEmitter {
         }
     }
 }
-
-// Example Usage
-// const stick = new Stick("/dev/input/js0", 120); // Read 120 times per second
-// stick.on("event", (event) => console.log(event)); // Handle events
-// stick.on("status", (status) => console.log("State:", status)); // Handle state updates
-// stick.on("error", (err) => console.error(err)); // Handle errors
-// stick.on("start", () => console.log("Stick started"));
-// stick.on("stop", () => console.log("Stick stopped"));
-
-// stick.start();
-
-
-// setTimeout(() => stick.stop(), 10000);

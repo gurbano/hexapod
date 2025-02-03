@@ -1,8 +1,17 @@
-// Enums for command properties
+import { TBaseBridgeProcessor } from "../../src/bridge/processors/types";
+
+// These are the commands that can be 
 export enum CommandName {
+    // socket commands
     MOVE = "MOVE",
     LOOK = "LOOK",
-    // Add more command names as needed
+    RELAX = "RELAX",
+    
+    // esp32 commands
+    E32_LED = "E32_LED",
+
+    // raspi commands
+    TALK = "TALK",
 }
 
 export enum CommandType {
@@ -13,15 +22,16 @@ export enum CommandType {
 
 export enum Platform {
     PI = "PI",
-    NANO = "NANO"
-}
+    ESP32 = "ESP32",
+    HEXA_SHIELD = "HEXA_SHIELD",
+}   
 
 export interface THexaCommand<Name extends CommandName, Params> {
   name: Name;
   type: CommandType;
   platform: Platform;
   parameters: Params;
-  processor: (name: Name, params: Params ) => Promise<void>
+  processor: TBaseBridgeProcessor<Name, Params>;
 }
 
 export enum GAIT {
@@ -33,15 +43,16 @@ export enum MODE {
     STRAFE = 0
 }
 export interface MoveParams {
-    gait: GAIT; // Example: "walk" or "run"
-    mode: MODE; // Speed in units
-    x: number; // X-coordinate
-    y: number; // Y-coordinate
+    gait: GAIT; 
+    mode: MODE;
+    x: number; 
+    y: number;
+    angle: number;
     speed: number;
 }
 
 
 export interface LookParams {
-    x: number; // X-coordinate
-    y: number; // Y-coordinate
+    x: number;
+    y: number;
 }

@@ -1,24 +1,38 @@
 
 import { CommandName, CommandType, LookParams, MoveParams, Platform, THexaCommand } from "../types/commands";
-import { defaultProcessor, bridgeProcessor } from "./bridge/processors";
+import { DefaultProcessor } from "./bridge/processors";
+import { LookProcessor, MoveProcessor, SocketRelayProcessor } from "./bridge/processors/SocketProcessor";
+import { ESocketCommmands } from "./bridge/processors/types";
 
 // Command configuration object
 const commands = {
     [CommandName.MOVE]: {
       type: CommandType.ACTION,
-      platform: Platform.PI,
-      paramType: {} as MoveParams, // Use a type assertion to define the parameter type
-      processor: bridgeProcessor,
+      platform: Platform.HEXA_SHIELD,
+      paramType: {} as MoveParams,
+      processor: new MoveProcessor(),
     },
     [CommandName.LOOK]: {
       type: CommandType.ACTION,
+      platform: Platform.HEXA_SHIELD,
+      paramType: {} as LookParams,
+      processor: new LookProcessor(),
+    },
+    [CommandName.RELAX]: {
+      type: CommandType.ACTION,
+      platform: Platform.HEXA_SHIELD,
+      paramType: null as undefined,
+      processor: new SocketRelayProcessor(ESocketCommmands.CMD_RELAX),
+    },
+    // -----------
+    [CommandName.TALK]: {
+      type: CommandType.ACTION,
       platform: Platform.PI,
-      paramType: {} as LookParams, // Use a type assertion to define the parameter type
-      processor: bridgeProcessor,
+      paramType: {} as any,
+      processor: new DefaultProcessor(),
     },
   } as const; // `as const` makes this object immutable and enables TypeScript inference
   
-  // Helper type to infer parameters from the commands object
   type CommandConfig = typeof commands;
   
   type CommandParamsFromName<Name extends keyof CommandConfig> = CommandConfig[Name]["paramType"];
@@ -26,7 +40,7 @@ const commands = {
   export const Factory = {
     command<Name extends keyof CommandConfig>(
       name: Name,
-      params: CommandParamsFromName<Name>
+      params?: CommandParamsFromName<Name>
     ): THexaCommand<Name, CommandParamsFromName<Name>> {
       const { type, platform, processor } = commands[name];
   
@@ -39,4 +53,4 @@ const commands = {
       };
     },
   };
-  
+
