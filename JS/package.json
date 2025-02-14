@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/controller.ts",
-     "test":  "echo \"Error: no test specified\" && exit 1",
-     "types": "tsc --noEmit"
+    "start": "ts-node src/HexaServer.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "types": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC",
